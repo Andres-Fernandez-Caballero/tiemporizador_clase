@@ -79,7 +79,7 @@
 <main class="container">
   <section class="card timer">
     <h1 class="time">{format(time)}</h1>
-    <h2>{mode}</h2>
+    <h2>modo {mode}</h2>
     <div class="actions">
       <button class="primary" on:click={start}>Iniciar</button>
       <button on:click={pause}>Pausar</button>

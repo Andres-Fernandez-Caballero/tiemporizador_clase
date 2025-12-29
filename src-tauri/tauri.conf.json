@@ -22,7 +22,9 @@
     }
   },
   "bundle": {
+    "createUpdaterArtifacts": true,
     "active": true,
+    
     "targets": "all",
     "icon": [
       "icons/32x32.png",
@@ -31,5 +33,17 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
+  },
+
+  "plugins": {
+    "updater": {
+      "windows": {
+        "installMode": "basicUi"
+      },
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDYxQzY5MTA0NzM0MTc1QzAKUldUQWRVRnpCSkhHWWVrdi9oNldRNlpjMGdseTZTUGFDWUlaU3JieEhZbFVXbjczVEpkT3hNR0wK",
+      "endpoints": [
+        "https://github.com/user/repo/releases/latest/download/latest.json"
+      ]
+    }
   }
 }

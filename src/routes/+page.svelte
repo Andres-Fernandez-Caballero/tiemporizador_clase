@@ -1,23 +1,18 @@
 <script lang="ts">
   import { isTauri } from "@tauri-apps/api/core";
-  import { calculateValue } from "../domain/rate";
   import { Timer } from "../domain/timer";
   import { getRate, updateRate } from "../application/providers";
-    import { rateFactorty } from "../domain/rate/rate_factory";
+  import { rateFactorty } from "../domain/rate/rate_factory";
 
   let time = 0;
   let interval: number | null = null;
   let ratePerHour = 0;
   let buttonDisabled = false;
-  let rateStrategy: "hourly" | "half-hour" | "pomodoro" = "hourly";
-
-  function onStrategyChange(e: Event) {
-    rateStrategy = (e.target as HTMLSelectElement).value as
-      | "hourly"
-      | "half-hour"
-      | "pomodoro";
-    console.log("rateStrategy: ", rateStrategy);
-  }
+  let rateStrategy:
+    | "half_hour_per_quarter"
+    | "two_students_per_hour-hour"
+    | "hourly"
+    | "first_hour_free";
 
   getRate.execute().then((rate) => {
     ratePerHour = rate;
@@ -28,6 +23,14 @@
 
   const timer = new Timer();
 
+  function onStrategyChange(e: Event) {
+    rateStrategy = (e.target as HTMLSelectElement).value as
+      | "half_hour_per_quarter"
+      | "two_students_per_hour-hour"
+      | "hourly"
+      | "first_hour_free";
+  }
+
   function start() {
     if (interval) return;
 
@@ -35,21 +38,8 @@
     interval = setInterval(() => {
       buttonDisabled = true;
       time = timer.getTime();
-      // usando patron strategy
+
       value = rateFactorty(rateStrategy).calculateValue(time, ratePerHour);
-    
-      /*
-      // codigo original
-      switch (rateStrategy) {
-        case "hourly":
-          value = calculateValueHourly(time, ratePerHour);
-          break;
-        case "half-hour":
-          const halfHourRate = ratePerHour * 0.75;
-          value = calculateValueHalfHour(time, halfHourRate);
-          break;  
-      }
-    */
     }, 200);
   }
 
@@ -100,7 +90,6 @@
   <section class="sidebar">
     <article class="rate">
       <div class="rate-row">
-        
         <label class="rate-input">
           <span>Precio por hora</span>
           <input
@@ -116,13 +105,17 @@
 
         <label class="rate-strategy">
           <span>Modo de cobro</span>
-          <select on:change={onStrategyChange} bind:value={rateStrategy} disabled={buttonDisabled}>
+          <select
+            on:change={onStrategyChange}
+            bind:value={rateStrategy}
+            disabled={buttonDisabled}
+          >
+            <option value="half_hour_per_quarter">½ hora + 15 min</option>
+            <option value="two_students_per_hour">2x1 alumnos al 75%</option>
+            <option value="first_hour_free">Primera hora gratis</option>
             <option value="hourly">Por hora exacta</option>
-            <option value="half-hour">½ hora + 15 min</option>
-            <option value="pomodoro">Pomodoro</option>
           </select>
         </label>
-      
       </div>
     </article>
 
@@ -250,7 +243,8 @@
     color: #666;
   }
 
-  .rate input, select {
+  .rate input,
+  select {
     border: none;
     border-bottom: 2px solid #ccc;
     padding: 0.4rem 0;
@@ -259,7 +253,8 @@
     transition: border-color 0.15s;
   }
 
-  .rate input:focus, .rate select:focus {
+  .rate input:focus,
+  .rate select:focus {
     border-color: var(--primary);
   }
 
@@ -303,8 +298,6 @@
     font-size: 0.8rem;
     color: #888;
   }
-
-  
 
   @media (min-width: 600px) {
     main.container {

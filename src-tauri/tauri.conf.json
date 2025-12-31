@@ -40,7 +40,7 @@
       "windows": {
         "installMode": "basicUi"
       },
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDYxQzY5MTA0NzM0MTc1QzAKUldUQWRVRnpCSkhHWWVrdi9oNldRNlpjMGdseTZTUGFDWUlaU3JieEhZbFVXbjczVEpkT3hNR0wK",
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDE5QzE5QkY5RUI4M0ZGMkIKUldRci80UHIrWnZCR2RFeERzSGpBQU8vU0Vuc3B1dkQ3OEswcjlQWTkzNmFObHZQOFV3WWJUZEIK",
       "endpoints": [
         "https://github.com/user/repo/releases/latest/download/latest.json"
       ]
